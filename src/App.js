@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import { AutoContext } from "./context/AutoContextProvider";
+import React from "react";
+import QuestionItem from "./components/QuestionItem";
+import './App.css'
 
 function App() {
-  const {questions} = useContext(AutoContext)
   return (
     <div className="App">
-      
+      <QuestionItem/>
     </div>
   );
 }
