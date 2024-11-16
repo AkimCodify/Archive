@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body{
     background: #478E64;
 }
@@ -5,12 +7,128 @@ body{
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Inter';
 }
 
 .container{
     max-width: 1200px;
 }
 
-.question-wrap{
-    
+.question-div{
+    background-color: white;
+    width: 1240px;
+    height: 600px;
+    gap: 0px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-right: 100px;
+    margin-left: 100px;
+    padding: 60px;
+}   
+
+.q-list{
+    list-style: none;
+    display: flex;
+    gap: 793px;
+}
+
+.q-otherstats{
+    display: flex;
+    gap: 50px;
+}
+
+.q-child{
+    color: white;
+}
+
+.q-child1{
+    color: #BB1919;
+}
+
+.q-div{
+    display: flex;
+    gap: 40px;
+}
+
+.q-img{
+    border-radius: 30px;
+    width: 750px;
+    height: 248px;
+}
+
+.q-radio_wrap{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 124.5px;
+}
+
+.q-btn{
+    width: 158px;
+    height: 45px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #B1B1B1;
+    color: white;
+    border: none;
+    margin: 0 auto;
+    margin-top: 82px;
+}
+
+.q-radio_div{
+    display: flex;
+    gap: 10px;
+}
+
+.q-feedback_yes{
+    width: 158px;
+    height: 45px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #11AE04;
+    color: white;
+    border: none;
+    margin: 0 auto;
+    margin-top: 82px;
+
+}
+
+.q-feedback_no{
+    width: 158px;
+    height: 45px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #BB1919;
+    color: white;
+    border: none;
+    margin: 0 auto;
+    margin-top: 82px;
+}
+
+#disabled{
+    display: none;
+}
+
+.q-next{
+    width: 158px;
+    height: 45px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #B1B1B1;
+    color: white;
+    border: none;
+    margin: 0 auto;
+    margin-top: 82px;
+}
+
+.q-btn[disabled]{
+    display: none;
+}
+
+.q-feedback_wrap{
+    display: flex;
+    justify-content: center;
+    gap: 200px;
 }
