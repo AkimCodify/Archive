@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AutoContext } from '../context/AutoContextProvider';
+import '../styles/QuestionItem.css'
 
 const QuestionItem = () => {
     const { getQuestion, question } = useContext(AutoContext);
@@ -8,47 +9,44 @@ const QuestionItem = () => {
     const [time, setTime] = useState(20 * 60);
     const [index, setIndex] = useState(0);
     const [id, setId] = useState(1);
-    const [selectedAnswer, setSelectedAnswer] = useState(null);  // Для хранения выбранного ответа
-    const [isCorrect, setIsCorrect] = useState(null);  // Для проверки правильности ответа
-    const [answered, setAnswered] = useState(false);  // Флаг, чтобы показать результат только после нажатия кнопки
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [isCorrect, setIsCorrect] = useState(null);
+    const [clickedRadio, setClickedRadio] = useState(false);
+    const [isNext, setIsNext] = useState(false)
+    const [answered, setAnswered] = useState(false)
 
-    // Загружаем вопрос
     useEffect(() => {
         getQuestion(id);
     }, [id]);
 
-    // Таймер
     useEffect(() => {
         const timer = setInterval(() => {
-            setTime((prevTime) => {
-                if (prevTime <= 0) {
-                    clearInterval(timer);
-                    return 0;
-                }
-                return prevTime - 1;
-            });
+            updateTimer(timer)
         }, 1000);
-
-        return () => clearInterval(timer);
     }, []);
+    
 
-    // Функция для обработки выбора ответа
-    const handleAnswerChange = (answer) => {
-        setSelectedAnswer(answer);
-    };
-
-    // Функция для обработки нажатия кнопки "Отправить"
     const handleSubmit = () => {
-        setAnswered(true);
-        // Проверяем правильность ответа
-        if (selectedAnswer && selectedAnswer.correctly) {
-            setIsCorrect(true);  // Ответ правильный
+        setAnswered(true)
+        setIsNext(true)
+        if (selectedAnswer.correctly) {
+            setIsCorrect(true)
         } else {
-            setIsCorrect(false);  // Ответ неправильный
+            setIsCorrect(false)
         }
     };
 
-    // Минуты и секунды для отображения таймера
+    const updateTimer = (timer) => {
+        setTime((prevTime) => {
+            if (prevTime <= 0) {
+                clearInterval(timer);
+                return 0;
+            }
+            return prevTime - 1;
+        });
+        return () => clearInterval(timer);
+    }
+
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
 
@@ -76,45 +74,42 @@ const QuestionItem = () => {
                                 <input
                                     type="radio"
                                     name={`input-${index}`}
-                                    checked={selectedAnswer?.answer === el.answer}  // Устанавливаем checked, если выбранный ответ совпадает с текущим
-                                    onChange={() => handleAnswerChange(el)}  // Обрабатываем выбор ответа
+                                    checked={selectedAnswer?.answer === el.answer}
+                                    onChange={() => {
+                                        setSelectedAnswer(el)
+                                        setClickedRadio(true)
+                                        
+                                    }}
                                 />
                                 <label>{el.answer}</label>
                             </div>
                         ))}
                     </div>
-                    {answered && (
-                        <div className="answer-feedback">
-                            {isCorrect ? (
-                                <div className='q-feedback_wrap'>
-                                    <button className='q-feedback_yes'>Ответ Верный!</button>
-                                    <button className='q-next' onClick={(e) => {
-                                        setQuestion(questionNumber + 1)
-                                        setIndex(index + 1)
-                                        setId(id + 1)
-                                        setSelectedAnswer(null)
-                                    }}>Следующий</button>
-                                </div>
-                            ) : (
-                                <div className='q-feedback_wrap'>
-                                    <button className='q-feedback_no'>Не верный ответ!</button>
-                                    <button className='q-next' onClick={(e) => {
-                                        setQuestion(questionNumber + 1)
-                                        setIndex(index + 1)
-                                        setId(id + 1)
-                                        setError(error + 1)
-                                    }}>Следующий</button>
-                                </div>
-                            )}
+                        <div className="q-btn_wrap">
+                            {
+                                answered && isNext === true && <div>
+                                        <div className='q-feedback_wrap'>
+                                            <button className={selectedAnswer?.correctly ? "q-feedback_yes" : "q-feedback_no"}>{selectedAnswer?.correctly ? "Ответ Верный!" : "Не верный ответ!"}</button>
+                                            <button className='q-next' onClick={(e) => {
+                                                setQuestion(questionNumber + 1);
+                                                setIndex(index + 1);
+                                                setId(id + 1);
+                                                setIsNext(false);
+                                                !selectedAnswer?.correctly && setError(error + 1);
+                                                setSelectedAnswer(null);
+                                                setClickedRadio(false)
+                                            }}>Следующий</button>
+                                        </div>
+                                    </div>
+                            } 
+                            <button 
+                                onClick={handleSubmit} 
+                                className='q-btn' 
+                                disabled={clickedRadio && isNext === false ? false : true}
+                            >
+                                Отправить
+                            </button>
                         </div>
-                    )}
-                    <button 
-                        onClick={handleSubmit} 
-                        className='q-btn' 
-                        disabled={!selectedAnswer}  // Если ответ не выбран, кнопка будет отключена
-                    >
-                        Отправить
-                    </button>
                 </div>
             </div>
         </div>

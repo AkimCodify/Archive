@@ -26,7 +26,7 @@ body{
     margin-right: 100px;
     margin-left: 100px;
     padding: 60px;
-}   
+}
 
 .q-list{
     list-style: none;
@@ -107,10 +107,6 @@ body{
     margin-top: 82px;
 }
 
-#disabled{
-    display: none;
-}
-
 .q-next{
     width: 158px;
     height: 45px;
@@ -127,8 +123,18 @@ body{
     display: none;
 }
 
-.q-feedback_wrap{
+.q-upper_info{
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.q-btn_wrap{
     display: flex;
     justify-content: center;
+    gap: 0px;
+}
+
+.q-feedback_wrap{
+    display: flex;
     gap: 200px;
 }
