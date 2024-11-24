@@ -5,7 +5,7 @@ import '../styles/QuestionItem.css'
 const QuestionItem = () => {
     const { getQuestion, question } = useContext(AutoContext);
     const [error, setError] = useState(0);
-    const [questionNumber, setQuestion] = useState(1);
+    const [questionNumber, setQuestion] = useState(0);
     const [time, setTime] = useState(20 * 60);
     const [index, setIndex] = useState(0);
     const [id, setId] = useState(1);
@@ -25,6 +25,12 @@ const QuestionItem = () => {
         checkTimer()
         updateTimer()
     }, [stopTimer]);
+
+    useEffect(() => {
+      if (questionNumber === 20 || error === 2) {
+        setStopTimer(true)
+      }
+    }, [error, questionNumber])
     
     const checkTimer = () => {
       if (!stopTimer) {
@@ -39,14 +45,10 @@ const QuestionItem = () => {
     const handleSubmit = () => {
         setAnswered(true)
         setIsNext(true)
-        if (selectedAnswer.correctly) {
+        if (selectedAnswer?.correctly) {
             setIsCorrect(true)
         } else {
             setIsCorrect(false)
-        }
-
-        if (error === 2) {
-          setStopTimer(true)
         }
     };
 
@@ -83,7 +85,7 @@ const QuestionItem = () => {
                 <li className="q-child1">Ошибки {error}/2</li>
                 <li className="q-child">Вопрос {questionNumber}/20</li>
                 <li className="q-child">
-                  Время: {stopTimer ? `${Math.floor(prevvTime / 60)}:${prevvTime % 60}` : `${minutes}:${seconds}`}
+                  Время: {stopTimer ? `${Math.floor(prevvTime / 60)}:${prevvTime % 60}` : `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
                 </li>
               </div>
             </ul>
@@ -111,28 +113,25 @@ const QuestionItem = () => {
                       setClickedRadio(true);
                     }}
                   />
-                  <label>{el.answer}</label>
+                  <label className='q-ans'>{el.answer}</label>
                 </div>
               ))}
             </div>
+            {isNext && <p className='q-expl'>{question?.explanation}</p>}
                         <div className="q-btn_wrap">
                             {
                                 answered && isNext === true && <div>
                                         <div className='q-feedback_wrap'>
                                             <button className={isCorrect ? "q-feedback_yes" : "q-feedback_no"}>{isCorrect ? "Ответ Верный!" : "Не верный ответ!"}</button>
-                                            <button className='q-next' onClick={(e) => {
+                                            <button className='q-next' onClick={() => {
                                                 setQuestion(questionNumber + 1);
                                                 setIndex(index + 1);
                                                 setId(id + 1);
                                                 setIsNext(false);
+                                                setIsCorrect(null)
                                                 !isCorrect && setError(error + 1);
                                                 setSelectedAnswer(null);
                                                 setClickedRadio(false)
-                                                if (questionNumber === 19 || error === 1) {
-                                                  console.log('q #20');
-                                                  
-                                                    setStopTimer(true)
-                                                }
                                             }}>Следующий</button>
                                         </div>
                                     </div>

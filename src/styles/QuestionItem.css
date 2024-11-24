@@ -62,7 +62,8 @@ body{
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-top: 124.5px;
+    margin-top: 38px;
+    margin-left: 127px;
 }
 
 .q-btn{
@@ -75,6 +76,8 @@ body{
     border: none;
     margin: 0 auto;
     margin-top: 82px;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .q-radio_div{
@@ -83,32 +86,35 @@ body{
 }
 
 .q-feedback_yes{
-    width: 158px;
-    height: 45px;
+    width: 203px;
+    height: 50px;
     gap: 10px;
     border-radius: 20px;
     background-color: #11AE04;
     color: white;
     border: none;
     margin: 0 auto;
-    margin-top: 82px;
-
+    margin-top: 25px;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .q-feedback_no{
-    width: 158px;
-    height: 45px;
+    width: 231px;
+    height: 50px;
     gap: 10px;
     border-radius: 20px;
     background-color: #BB1919;
     color: white;
     border: none;
     margin: 0 auto;
-    margin-top: 82px;
+    margin-top: 25px;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .q-next{
-    width: 158px;
+    width: 173px;
     height: 45px;
     gap: 10px;
     border-radius: 20px;
@@ -116,7 +122,9 @@ body{
     color: white;
     border: none;
     margin: 0 auto;
-    margin-top: 82px;
+    margin-top: 25px;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .q-btn[disabled]{
@@ -137,4 +145,22 @@ body{
 .q-feedback_wrap{
     display: flex;
     gap: 200px;
+}
+
+.q-expl{
+    max-width: 1100px;
+    font-weight: 500;
+    font-size: 22px;
+    margin-top: 25px;
+}
+
+.q-question{
+    max-width: 328px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.q-ans{
+    font-size: 22px;
+    font-weight: 500;
 }
