@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AutoContext } from '../context/AutoContextProvider';
 import '../styles/QuestionItem.css'
+import FailImg from '../assets/Frame (3).png'
+import Homeimg from '../assets/Frame (4).png'
+import RepeatImg from '../assets/Frame (5).png'
+import PassImg from '../assets/Smile.png'
+
 
 const QuestionItem = () => {
     const { getQuestion, question } = useContext(AutoContext);
@@ -16,29 +21,34 @@ const QuestionItem = () => {
     const [answered, setAnswered] = useState(false)
     const [stopTimer, setStopTimer] = useState(false)
     const [prevvTime, setPrevTime] = useState(null)
+    const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
 
     useEffect(() => {
         getQuestion(id);
     }, [id]);
 
     useEffect(() => {
+      if (!stopTimer && !allQuestionsAnswered) {
         checkTimer()
-        updateTimer()
-    }, [stopTimer]);
+      }
+      return () => clearInterval(timer)
+    }, [stopTimer, allQuestionsAnswered]);
 
     useEffect(() => {
-      if (questionNumber === 20 || error === 2) {
+      if (error === 2) {
         setStopTimer(true)
+      } else if (questionNumber === 20) {
+        setAllQuestionsAnswered(true)
       }
     }, [error, questionNumber])
     
     const checkTimer = () => {
-      if (!stopTimer) {
+      if (!stopTimer && !allQuestionsAnswered) {
         return timer = setInterval(() => {
-          updateTimer(timer);
+          updateTimer();
         }, 1000);
     } else {
-      return timer = 0
+      clearInterval(timer)
     }
     }
 
@@ -50,30 +60,32 @@ const QuestionItem = () => {
         } else {
             setIsCorrect(false)
         }
+        if (questionNumber === 20) {
+          setAllQuestionsAnswered(true);
+          setStopTimer(true);
+        }
     };
 
-    const updateTimer = (timer) => {
-        setTime((prevTime) => {
-            if (prevTime <= 0) {
-                clearInterval(timer);
-                setStopTimer(true)
-                return 0;
-            }
-            if (stopTimer === false) {
-              return prevTime - 1;
-            } else if (stopTimer === true) {
-              if (prevTime !== NaN) {
-                setPrevTime(prevTime)
-              } else {
-                return prevvTime
-              }
-            }
-        });
-    }
+
+    const updateTimer = () => {
+      setTime((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(timer);
+          setStopTimer(true);
+          return 0;
+        } else if (stopTimer || allQuestionsAnswered) {
+          clearInterval(timer);
+          return prevTime;
+        }
+        return prevTime - 1;
+      });
+    };
 
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     let timer;
+    const stoppedSeconds = prevvTime % 60
+    const stoppedMinutes = Math.floor(prevvTime / 60)
 
     return (
       <div className="question-wrap">
@@ -85,70 +97,156 @@ const QuestionItem = () => {
                 <li className="q-child1">Ошибки {error}/2</li>
                 <li className="q-child">Вопрос {questionNumber}/20</li>
                 <li className="q-child">
-                  Время: {stopTimer ? `${Math.floor(prevvTime / 60)}:${prevvTime % 60}` : `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
+                  Время:{" "}
+                  {stopTimer
+                    ? `${
+                        stoppedMinutes < 10
+                          ? `0${stoppedMinutes}`
+                          : stoppedMinutes
+                      }:${
+                        stoppedSeconds < 10
+                          ? `0${stoppedSeconds}`
+                          : stoppedSeconds
+                      }`
+                    : `${minutes < 10 ? `0${minutes}` : minutes}:${
+                        seconds < 10 ? `0${seconds}` : seconds
+                      }`}
                 </li>
               </div>
             </ul>
           </div>
-          {questionNumber !== 20 && error !== 2 && !stopTimer ? <div className="question-div">
-            <div className="q-div">
-              <p className="q-question">{question?.question}</p>
-              {question?.image && (
-                <img
-                  src={question?.image}
-                  alt="Question Image"
-                  className="q-img"
-                />
-              )}
-            </div>
-            <div className="q-radio_wrap">
-              {question?.answers?.map((el, idx) => (
-                <div key={idx} className="q-radio_div">
-                  <input
-                    type="radio"
-                    name={`input-${index}`}
-                    checked={selectedAnswer?.answer === el.answer}
-                    onChange={() => {
-                      setSelectedAnswer(el);
-                      setClickedRadio(true);
-                    }}
+          {questionNumber !== 20 && error !== 2 && !stopTimer ? (
+            <div className="question-div">
+              <div className="q-div">
+                <p className="q-question">{question?.question}</p>
+                {question?.image && (
+                  <img
+                    src={question?.image}
+                    alt="Question Image"
+                    className="q-img"
                   />
-                  <label className='q-ans'>{el.answer}</label>
-                </div>
-              ))}
+                )}
+              </div>
+              <div className="q-radio_wrap">
+                {question?.answers?.map((el, idx) => (
+                  <div key={idx} className="q-radio_div">
+                    <input
+                      type="radio"
+                      name={`input-${index}`}
+                      checked={selectedAnswer?.answer === el.answer}
+                      onChange={() => {
+                        setSelectedAnswer(el);
+                        setClickedRadio(true);
+                      }}
+                    />
+                    <label className="q-ans">{el.answer}</label>
+                  </div>
+                ))}
+              </div>
+              {isNext && <p className="q-expl">{question?.explanation}</p>}
+              <div className="q-btn_wrap">
+                {answered && isNext === true && (
+                  <div>
+                    <div className="q-feedback_wrap">
+                      <button
+                        className={
+                          isCorrect ? "q-feedback_yes" : "q-feedback_no"
+                        }
+                      >
+                        {isCorrect ? "Ответ Верный!" : "Не верный ответ!"}
+                      </button>
+                      <button
+                        className="q-next"
+                        onClick={() => {
+                          if (questionNumber !== 19) {
+                            setId(id + 1);
+                            setQuestion(questionNumber + 1);
+                            setIndex(index + 1);
+                            setIsNext(false);
+                            setIsCorrect(null);
+                            !isCorrect && setError(error + 1);
+                            setSelectedAnswer(null);
+                            setClickedRadio(false);
+                          } else {
+                            setIndex(index + 1);
+                            setIsNext(false);
+                            setIsCorrect(null);
+                            setQuestion(questionNumber + 1);
+                            !isCorrect && setError(error + 1);
+                            setSelectedAnswer(null);
+                            setClickedRadio(false);
+                          }
+                        }}
+                      >
+                        Следующий
+                      </button>
+                    </div>
+                  </div>
+                )}
+                <button
+                  onClick={handleSubmit}
+                  className="q-btn"
+                  disabled={clickedRadio && isNext === false ? false : true}
+                >
+                  Отправить
+                </button>
+              </div>
             </div>
-            {isNext && <p className='q-expl'>{question?.explanation}</p>}
-                        <div className="q-btn_wrap">
-                            {
-                                answered && isNext === true && <div>
-                                        <div className='q-feedback_wrap'>
-                                            <button className={isCorrect ? "q-feedback_yes" : "q-feedback_no"}>{isCorrect ? "Ответ Верный!" : "Не верный ответ!"}</button>
-                                            <button className='q-next' onClick={() => {
-                                                setQuestion(questionNumber + 1);
-                                                setIndex(index + 1);
-                                                setId(id + 1);
-                                                setIsNext(false);
-                                                setIsCorrect(null)
-                                                !isCorrect && setError(error + 1);
-                                                setSelectedAnswer(null);
-                                                setClickedRadio(false)
-                                            }}>Следующий</button>
-                                        </div>
-                                    </div>
-                            } 
-                            <button 
-                                onClick={handleSubmit} 
-                                className='q-btn' 
-                                disabled={clickedRadio && isNext === false ? false : true}
-                            >
-                                Отправить
-                            </button>
-                        </div>
-                </div>
-            : <div className='res-box'>
-                
-              </div>} </div>
+          ) : error === 2 || stopTimer === true ? (
+            <div className="fail-box">
+              <div className="f-box_upper">
+                <img src={FailImg} alt="fail-img" className="f-fail_img" />
+                <h2 className="f-text">Тест не пройден!</h2>
+              </div>
+              <div className="f-results_box">
+                <p className="f-results_child">Билет {""} 1</p>
+                <p className="f-results_child">
+                  Время: {""}
+                  {`${minutes < 10 ? `0${minutes}` : minutes}:${
+                    seconds < 10 ? `0${seconds}` : seconds
+                  }`}
+                </p>
+                <p className="f-results_child">Вопрос {questionNumber}/20</p>
+                <p className="f-results_child1">Ошибки {error}/2</p>
+              </div>
+              <div className="btn-box">
+                <button className="home-btn">
+                  На главную <img src={Homeimg} alt="Home img" />
+                </button>
+                <button className="tryagain-btn">
+                  Повторить <img src={RepeatImg} alt="repeat img" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="pass-box">
+              <div className="p-box_upper">
+                <img className="p-pass_img" src={PassImg} alt="Smile img" />
+                <h2 className="p-text">Тест пройден!</h2>
+              </div>
+              <div className="p-results_box">
+                <p className="p-results_child">Билет 1</p>
+                <p className="p-results_child">
+                  Время: {""}
+                  {`${minutes < 10 ? `0${minutes}` : minutes}:${
+                    seconds < 10 ? `0${seconds}` : seconds
+                  }`}
+                </p>
+                <p className="p-results_child">Вопрос 20/20</p>
+                <p className="p-results_child1">Ошибки {error}/2</p>
+              </div>
+              <div className="btn-box">
+                <button className="home-btn">
+                  На главную <img src={Homeimg} alt="Home img" />
+                </button>
+                <button className="tryagain-btn">
+                  Повторить <img src={RepeatImg} alt="repeat img" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
+      </div>
     );
 };
 
