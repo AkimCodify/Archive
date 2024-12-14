@@ -1,5 +1,133 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+@media screen and (max-width: 390px) {
+    .q-upper_info{
+        width: 100% !important;
+        background-color: #488F65 !important;
+        height: 60px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        display: flex !important; 
+        align-items: center !important;
+    }
+    .q-list{
+        display: flex !important;
+        gap: 130px !important;
+        margin-left: 16px !important;
+        margin-right: 16px !important;
+        padding-top: 10px !important;
+        padding-right: 10px !important;
+    }
+    .q-otherstats{
+        display: flex !important;
+        gap: 10px !important;
+    }
+    .question-div{
+        width: 100% !important;
+        height: 1200px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 16px !important;
+        margin: 0px !important;
+        border-radius: 0px !important;
+    }
+    .q-div{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .q-question{
+        width: 100% !important;
+    }
+    .q-img{
+        width: 358px !important;
+        height: 130.79px !important;
+        border-radius: 0px !important;
+    }
+    .q-img1{
+        border-radius: 0px !important;
+    }
+    .q-img2{
+        border-radius: 0px !important;
+    }
+    .q-radio_wrap{
+        margin: 0px !important;
+        margin-top: 20.21px !important;
+    }
+    .q-radio{
+        width: 24px !important;
+        height: 24px !important;
+    }
+    .q-expl{
+        max-width: 358px !important;
+    }
+    .q-feedback_wrap{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0px !important;
+    }
+    .q-ans{
+        max-width: 324px !important;
+    }
+    .fail-box{
+        width: 358px !important;
+        height: 210.69px !important;
+        margin-top: 232.71px !important;
+        padding-top: 5.24px !important;
+        margin-left: 16px !important;
+    }
+    .pass-box{
+        width: 358px !important;
+        height: 209.69px !important;
+        margin-top: 232.71px !important;
+        padding-top: 5.24px !important;
+        margin-left: 16px !important;
+    }
+    .p-box_upper{
+        margin-top: 0px !important;
+    }
+    .p-results_box{
+        gap: 15px !important;
+        margin-top: 26.21px !important;
+    }
+    .f-results_box{
+        margin-top: 26.34px !important;
+        gap: 15px !important;
+        padding-left: 14.2px !important;
+        padding-right: 14.2px !important;
+    }
+    .f-fail_img{
+        width: 51.14px !important;
+        height: 52.67px !important;
+    }
+    .p-pass_img{
+        width: 51.14px !important;
+        height: 52.42px !important;
+    }
+    .btn-box{
+        margin-top: 23.23px !important;
+        display: flex !important;
+        gap: 15.77px !important;
+    }
+    .tryagain-btn{
+        border-radius: 10px !important;
+        width: 113.08px !important;
+        height: 23.7px !important;
+        font-size: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .home-btn{
+        border-radius: 10px !important;
+        width: 128px !important;
+        height: 23.7px !important;
+        font-size: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
 body{
     background: #478E64;
 }
@@ -56,6 +184,14 @@ body{
     border-radius: 30px;
     width: 750px;
     height: 248px;
+}
+
+.q-img1{
+    border-radius: 30px;
+}
+
+.q-img2{
+    border-radius: 30px;
 }
 
 .q-radio_wrap{
@@ -148,7 +284,7 @@ body{
 }
 
 .q-expl{
-    max-width: 1100px;
+    max-width: 999999999999px;
     font-weight: 500;
     font-size: 22px;
     margin-top: 25px;

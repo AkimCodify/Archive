@@ -1,0 +1,163 @@
+.DrivingSchool {
+    background-color: #478E64;
+    color: white;
+}
+
+.whatsapp-link{
+    display: flex;
+    gap: 10px;
+}
+
+.whatsapp-img{
+    width: 30px;
+    height: 30px;
+}
+
+.safeToDrive {
+    display: flex;
+    font-size: 25px;
+    flex-direction: column;
+    margin-left: 30%;
+    opacity: 100%;
+}
+
+.DrivingSchool h1 {
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.safeToDrive span {
+    margin-left: 12%;
+}
+
+.practice, .practiceTest {
+    background: #0000001A;
+    width: 80%;
+    border-radius: 40px;
+    margin-left: 10%;
+    margin-top: 4%;
+    padding-bottom: 3%;
+}
+
+.practice .school, .practiceTest .test {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    margin-left: 7%;
+}
+
+.DrivingSchool h2 {
+    display: flex;
+    justify-content: center;
+    height: 90%;
+    padding-top: 2%;
+}
+
+.practiceTest button {
+    background-color: white;
+    color: black;
+    border-radius: 25px;
+    width: 17%;
+    height: 60px;
+    font-size: 20px;
+    border: 0cap;
+    margin-left: 30%;
+    margin-top: 4%;
+}
+
+.practice p, .practiceTest p {
+    font-size: 27px;
+    margin-left: 2%;
+}
+
+.school a {
+    color: white;
+    text-decoration: none;
+}
+
+.buy{
+    max-width: 99999999px;
+}
+
+@media screen and (max-width: 768px) {
+    .practice, .practiceTest {
+        width: 90%;
+        height: 350px;
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 5%;
+    } 
+
+    .DrivingSchool p {
+        font-size: 20px;
+    }
+
+    .DrivingSchool h1 {
+        font-size: 30px;
+    }
+
+    .safeToDrive {
+        margin-left: 3%;
+        font-size: 15%;
+    }
+
+    .test{
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        margin-bottom: 40%;
+    }
+    
+    .school img {
+        height: 35%;
+        width: 35%;
+        display: flex;
+        justify-content: center;
+        margin-top: 60%;
+        margin-left: 35%;
+    }
+
+    .test img {
+        height: 35%;
+        width: 35%;
+        display: flex;
+        justify-content: center;
+        margin-top: 40%;
+        margin-left: 35%;
+    }
+
+    .test p {
+        margin-top: 15%;
+        margin-left: -180%;
+        font-size: 16px;
+    }
+
+    .school p {
+        margin-bottom: 135%;
+        margin-left: -190%;
+        font-size: 14px;
+    }
+
+    .school a {
+        display: none;
+    }
+
+    .buy {
+        margin-top: -120%;
+    }
+
+    .DrivingSchool h2 {
+        font-size: 15px;
+    }
+
+    .practiceTest button {
+        width: 120%;
+        height: 45px;
+        font-size: 20px;
+        border: 0cap;
+        margin-left: -110%;
+        margin-top: 100%;
+    }
+}

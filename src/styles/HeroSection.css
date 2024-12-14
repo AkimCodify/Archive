@@ -1,0 +1,122 @@
+.hero-section {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background-image: url('../assets/image\ 58.png');
+  }
+  
+  .hero-content {
+    flex: 1;
+    max-width: 500px;
+  }
+  
+  .hero-content h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .hero-content p {
+    font-size: 18px;
+    color: #666;
+    margin: 10px 0;
+  }
+
+  .hero-link{
+    text-decoration: none;
+    color: white;
+  }
+
+  
+  
+  .contact-options {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .whatsapp-button {
+    padding: 10px 20px;
+    background-color: #7DA658;
+    color: #F1F1F1;
+    outline: 0.1px solid rgb(0, 0, 0);
+
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  
+  .whatsapp-button:hover {
+    background-color: #1ebe57;
+  }
+  
+  .phone-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: underline;
+    outline-offset: 10px;      /* Отдаляет обводку на 10 пикселей от границы элемента */
+
+  }
+  
+  .work-schedule {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #F1F1F1;
+  }
+  
+  .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  @media (max-width: 768px) {
+    .hero-section {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  /* Карточка, которая появляется */
+.card {
+  position: absolute; /* Абсолютное позиционирование для карточки */
+  top: 10%; /* Сдвигаем карточку немного сверху от центра */
+  left: 30%; /* Центрируем по горизонтали */
+  transform: translate(-50%, -50%); /* Центрируем точку по середине */
+  width: 610px;
+  height: 306px;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0; /* Начальная прозрачность */
+  transform: scale(0.5); /* Начальный размер */
+  animation: showCard 0.5s forwards; /* Анимация при появлении */
+  z-index: 2; /* Устанавливаем z-index выше, чтобы карточка была поверх других элементов */
+  pointer-events: none; /* Блокируем взаимодействие с картой, чтобы она не мешала кликам */
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Анимация карточки */
+@keyframes showCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

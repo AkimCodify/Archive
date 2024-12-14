@@ -1,0 +1,44 @@
+.ourArticles h1 {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    margin-bottom: 45px;
+}
+
+.articles {
+    display: flex;
+    flex-direction: row;
+    width: 86%;
+    margin-left: 7%;
+    margin-bottom: 3%;
+}
+
+.articles img {
+    width: 30%;
+    margin-left: 3%;
+}
+
+.ourArticles {
+    display: flex;  
+    flex-direction: column;
+    background-color: white;
+}
+
+.articles p {
+    font-size: 25px;
+}
+
+@media screen and (max-width: 768px) {
+    .ourArticles p {
+        font-size: 13px;
+    }
+
+    .articles img {
+        width: 48%;
+        height: 170px;
+    }
+
+    .articles h1 {
+        font-size: 10px;
+    }
+}

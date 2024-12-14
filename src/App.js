@@ -1,10 +1,11 @@
 import React from "react";
-import QuestionItem from "./components/QuestionItem";
+import './styles/adaptiv.css'
+import AppRouter from "./components/Routing/AppRouter";
 
 function App() {
   return (
     <div className="App">
-      <QuestionItem/>
+      <AppRouter />
     </div>
   );
 }

@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #F1F1F1;
+    color: #F1F1F1;
+  }
+
+  .navigation{
+    padding-right: 300px;
+    
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navigation a {
+    margin: 0 15px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none
+  }
+  
+  .navigation a:hover {
+    text-decoration: underline;
+  }
+  

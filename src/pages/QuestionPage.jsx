@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AutoContext } from '../context/AutoContextProvider';
-import '../styles/QuestionItem.css'
+import '../styles/QuestionPage.css'
 import FailImg from '../assets/Frame (3).png'
 import Homeimg from '../assets/Frame (4).png'
 import RepeatImg from '../assets/Frame (5).png'
 import PassImg from '../assets/Smile.png'
+import { useNavigate } from 'react-router-dom';
 
 
-const QuestionItem = () => {
+
+const QuestionPage = () => {
     const { getQuestion, question } = useContext(AutoContext);
     const [error, setError] = useState(0);
-    const [questionNumber, setQuestion] = useState(0);
+    const [questionNumber, setQuestion] = useState(1);
     const [time, setTime] = useState(20 * 60);
     const [index, setIndex] = useState(0);
     const [id, setId] = useState(1);
@@ -20,8 +22,8 @@ const QuestionItem = () => {
     const [isNext, setIsNext] = useState(false)
     const [answered, setAnswered] = useState(false)
     const [stopTimer, setStopTimer] = useState(false)
-    const [prevvTime, setPrevTime] = useState(null)
     const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false)
+    const Navigate = useNavigate()
 
     useEffect(() => {
         getQuestion(id);
@@ -44,7 +46,7 @@ const QuestionItem = () => {
     
     const checkTimer = () => {
       if (!stopTimer && !allQuestionsAnswered) {
-        return timer = setInterval(() => {
+        timer = setInterval(() => {
           updateTimer();
         }, 1000);
     } else {
@@ -83,21 +85,21 @@ const QuestionItem = () => {
 
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    let timer;
-    const stoppedSeconds = prevvTime % 60
-    const stoppedMinutes = Math.floor(prevvTime / 60)
+    let timer
+    const stoppedSeconds = time % 60
+    const stoppedMinutes = Math.floor(time / 60);
 
     return (
       <div className="question-wrap">
         <div className="container">
           <div className="q-upper_info">
-            <ul className="q-list">
-              <li className="q-child">Билет 1</li>
+            <div className="q-list">
+              <p className="q-child">Билет 1</p>
               <div className="q-otherstats">
-                <li className="q-child1">Ошибки {error}/2</li>
-                <li className="q-child">Вопрос {questionNumber}/20</li>
-                <li className="q-child">
-                  Время:{" "}
+                <p className="q-child1">Ошибки {error}/2</p>
+                <p className="q-child">Вопрос {questionNumber}/20</p>
+                <p className="q-child">
+                  Время: {""}
                   {stopTimer
                     ? `${
                         stoppedMinutes < 10
@@ -111,21 +113,34 @@ const QuestionItem = () => {
                     : `${minutes < 10 ? `0${minutes}` : minutes}:${
                         seconds < 10 ? `0${seconds}` : seconds
                       }`}
-                </li>
+                </p>
               </div>
-            </ul>
+            </div>
           </div>
           {questionNumber !== 20 && error !== 2 && !stopTimer ? (
             <div className="question-div">
               <div className="q-div">
                 <p className="q-question">{question?.question}</p>
-                {question?.image && (
-                  <img
-                    src={question?.image}
-                    alt="Question Image"
-                    className="q-img"
-                  />
-                )}
+                {question?.image &&
+                  (questionNumber === 8 ? (
+                    <img
+                      src={question?.image}
+                      alt="Question Image"
+                      className="q-img1"
+                    />
+                  ) : questionNumber === 16 ? (
+                    <img
+                      src={question?.image}
+                      alt="Question Image"
+                      className="q-img2"
+                    />
+                  ) : (
+                    <img
+                      src={question?.image}
+                      alt="Question Image"
+                      className="q-img"
+                    />
+                  ))}
               </div>
               <div className="q-radio_wrap">
                 {question?.answers?.map((el, idx) => (
@@ -133,6 +148,7 @@ const QuestionItem = () => {
                     <input
                       type="radio"
                       name={`input-${index}`}
+                      className="q-radio"
                       checked={selectedAnswer?.answer === el.answer}
                       onChange={() => {
                         setSelectedAnswer(el);
@@ -158,20 +174,19 @@ const QuestionItem = () => {
                       <button
                         className="q-next"
                         onClick={() => {
-                          if (questionNumber !== 19) {
+                          if (questionNumber !== 20) {
                             setId(id + 1);
-                            setQuestion(questionNumber + 1);
                             setIndex(index + 1);
                             setIsNext(false);
                             setIsCorrect(null);
                             !isCorrect && setError(error + 1);
                             setSelectedAnswer(null);
                             setClickedRadio(false);
+                            setQuestion(questionNumber + 1);
                           } else {
                             setIndex(index + 1);
                             setIsNext(false);
                             setIsCorrect(null);
-                            setQuestion(questionNumber + 1);
                             !isCorrect && setError(error + 1);
                             setSelectedAnswer(null);
                             setClickedRadio(false);
@@ -210,10 +225,20 @@ const QuestionItem = () => {
                 <p className="f-results_child1">Ошибки {error}/2</p>
               </div>
               <div className="btn-box">
-                <button className="home-btn">
+                <button
+                  className="home-btn"
+                  onClick={() => {
+                    Navigate("/");
+                  }}
+                >
                   На главную <img src={Homeimg} alt="Home img" />
                 </button>
-                <button className="tryagain-btn">
+                <button
+                  className="tryagain-btn"
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                >
                   Повторить <img src={RepeatImg} alt="repeat img" />
                 </button>
               </div>
@@ -236,10 +261,20 @@ const QuestionItem = () => {
                 <p className="p-results_child1">Ошибки {error}/2</p>
               </div>
               <div className="btn-box">
-                <button className="home-btn">
+                <button
+                  className="home-btn"
+                  onClick={() => {
+                    Navigate("/");
+                  }}
+                >
                   На главную <img src={Homeimg} alt="Home img" />
                 </button>
-                <button className="tryagain-btn">
+                <button
+                  className="tryagain-btn"
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                >
                   Повторить <img src={RepeatImg} alt="repeat img" />
                 </button>
               </div>
@@ -250,4 +285,4 @@ const QuestionItem = () => {
     );
 };
 
-export default QuestionItem;
+export default QuestionPage;

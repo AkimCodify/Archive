@@ -1,0 +1,28 @@
+.instructor-profile {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background-color: #F1F1F1;
+    
+  }
+  
+  .instructor-photo {
+    width: 340px;
+    height: 415px;
+    margin-right: 100px;
+  }
+  
+  .profile-info {
+    max-width: 500px;
+  }
+  
+  .profile-info h2 {
+    font-size: 28px;
+    color: #333;
+  }
+  
+  .profile-info p {
+    font-size: 16px;
+    color: black;
+  }
+  
